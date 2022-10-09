@@ -1,0 +1,26 @@
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX ex: <http://example.org/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX tio: <http://purl.org/tio/ns#>
+PREFIX time: <http://www.w3.org/2006/time#>
+PREFIX dbp: <http://dbpedia.org/property/>
+
+CONSTRUCT {
+    ?measure tio:from ?partner;
+             tio:to ?geo;
+             time:year ?year_int;
+             rdf:value ?value_int;
+             ex:unit ?unit;
+             ex:measuredMetric ?tra_meas.
+}
+FROM <file:../raw_data/avia_paocc_linear.csv#encoding=utf-8;header=present;delimiter=comma>
+WHERE {
+
+    BIND (UUID() AS ?measure).
+    BIND (xsd:integer(?TIME_PERIOD) AS ?year_int).
+    BIND (xsd:integer(?OBS_VALUE) AS ?value_int).
+    FILTER(?freq="A")
+    FILTER regex(?partner, "^[A-Z][A-Z]$")
+    FILTER regex(?geo, "^[A-Z][A-Z]$")
+}
