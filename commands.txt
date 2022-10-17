@@ -1,2 +1,2 @@
 To generate Turtle file of the data set:
-./tarql-1.2/bin/tarql SPARQL/dataset_crea.sparql >> Turtle/data.ttl
+./tarql-1.2/bin/tarql ./SPARQL/dataset_crea.sparql >> Turtle/data.ttl
