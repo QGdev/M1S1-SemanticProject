@@ -1,0 +1,23 @@
+#	Requête faite par Quentin GOMES DOS REIS
+
+PREFIX ex: <http://example.org/>
+PREFIX time: <http://www.w3.org/2006/time#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX tio: <http://purl.org/tio/ns#>
+
+#	Affichage du pays de départ et d'arrivée ainsi que la somme des vols annuels
+SELECT ?from ?to (SUM(?value) AS ?total)
+WHERE {
+  ?s tio:from ?from;		#	Départ des vols
+     tio:to ?to;			#	Destination des vols
+     ex:measuredMetric ?mM;	#	Ce qui est mesuré
+     time:year ?year;		#	L'année de la mesure
+     rdf:value ?value.		#	Le nombre de vols cette année là...
+  
+  #	On ne garde que les données sur la période de 2019 (inclu) à 2021 (inclu)
+  #	et on garde que les données représentant les passagers transportés
+  FILTER(?year > 2018 && ?year < 2021 && ?mM = "PAS_CRD")
+}
+GROUP BY ?from
+ORDER BY DESC(?total)
+LIMIT 25
