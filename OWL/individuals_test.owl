@@ -1,0 +1,63 @@
+# DESCRIBING UNITS
+
+    :tonUnit        rdf:type        owl:Class;
+                    owl:sameAs      m3:Tonne;
+                    rdfs:comment    "Used to describe everything about freight in our dataset {[FRM_BRD], [FRM_LD_NLD]}";
+                    rdfs:label      "Ton".
+
+    :passengerUnit  rdf:type        owl:Class;
+                    owl:sameAs      dbo:Person;
+                    rdfs:comment    "As the name says, this is the unit to describe a number of passenger in our dataset {[PAS_BRD], [PAS_CRD]}";
+                    rdfs:label      "Passenger".
+
+    :flightUnit     rdf:type        owl:Class;
+                    owl:sameAs      ns:Flight;
+                    rdfs:comment    "Used to describe a single travel between A and B like A -> B or A <- B and not A <-> B in our dataset {[CAF], [CAF_PAS], [CAF_FRM]}";
+                    rdfs:label      "Flight".
+
+    :seatUnit       rdf:type        owl:Class;
+                    owl:sameAs      shc:Seat;
+                    rdfs:comment    "Used to describe a single seat in a plane in our dataset {[ST_PAS]}";
+                    rdfs:label      "Seat".
+
+    # DESCRIBING measuredMetric
+
+    :FRM_BRD        rdf:type        owl:Class;
+                    owl:sameAs      m3:Tonne;
+                    rdfs:comment    "Used to describe Freight and mail on board";
+                    rdfs:label      "FRM_BRD".
+
+    :FRM_LD_NLD     rdf:type        owl:Class;
+                    owl:sameAs      dbo:Person;
+                    rdfs:comment    "Used to describe Freight and mail loaded and unloaded";
+                    rdfs:label      "FRM_LD_NLD".
+
+    :PAS_BRD        rdf:type        owl:Class;
+                    owl:sameAs      ns:Flight;
+                    rdfs:comment    "Used to describe Passengers on board";
+                    rdfs:label      "PAS_BRD".
+
+    :PAS_CRD        rdf:type        owl:Class;
+                    owl:sameAs      shc:Seat;
+                    rdfs:comment    "Used to describe Passengers carried";
+                    rdfs:label      "PAS_CRD".
+    
+    :CAF            rdf:type        owl:Class;
+                    owl:sameAs      ns:Flight;
+                    rdfs:comment    "Used to describe Commercial air flights (passengers, freight and mail)";
+                    rdfs:label      "CAF".
+
+    :CAF_PAS        rdf:type        owl:Class;
+                    owl:sameAs      shc:Seat;
+                    rdfs:comment    "Used to describe Commercial passenger air flights";
+                    rdfs:label      "CAF_PAS".
+
+    :CAF_FRM        rdf:type        owl:Class;
+                    owl:sameAs      shc:Seat;
+                    rdfs:comment    "Used to describe Freight and mail commercial air flights";
+                    rdfs:label      "CAF_FRM".
+
+    :ST_PAS        rdf:type        owl:Class;
+                    owl:sameAs      shc:Seat;
+                    rdfs:comment    "Used to describe Passengers seats available";
+                    rdfs:label      "ST_PAS".
