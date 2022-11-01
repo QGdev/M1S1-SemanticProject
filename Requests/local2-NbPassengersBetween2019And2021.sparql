@@ -1,23 +1,37 @@
 #	Requête faite par Quentin GOMES DOS REIS
 
-PREFIX ex: <http://example.org/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX time: <http://www.w3.org/2006/time#>
+PREFIX ex: <http://example.org/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX tio: <http://purl.org/tio/ns#>
+PREFIX dbo: <http://dbpedia.org/ontology/>
 
-#	Affichage du pays de départ et d'arrivée ainsi que la somme des vols annuels
-SELECT ?from ?to (SUM(?value) AS ?total)
+# Affichage des données intéressantes ainsi que le rapport entre le nb de passagers transportés et le nombre de vols
+SELECT  ?countryCode ?icao ?nbOfFlights ?transportedPass (xsd:float(xsd:integer(?transportedPass)/xsd:integer(?nbOfFlights)) AS ?passengersPerFlight)
+
 WHERE {
-  ?s tio:from ?from;		#	Départ des vols
-     tio:to ?to;			#	Destination des vols
-     ex:measuredMetric ?mM;	#	Ce qui est mesuré
-     time:year ?year;		#	L'année de la mesure
-     rdf:value ?value.		#	Le nombre de vols cette année là...
+  # Récupération le nombre de vols commerciaux de passagers
+  ?x	time:year 2018;
+    	ex:declarativeAirport ?airport;
+    	ex:measuredMetric "CAF_PAS";
+    	ex:coverageTransport "NAT";
+     	ex:airline "TOTAL";
+    	rdf:value ?nbOfFlights.
   
-  #	On ne garde que les données sur la période de 2019 (inclu) à 2021 (inclu)
-  #	et on garde que les données représentant les passagers transportés
-  FILTER(?year > 2018 && ?year < 2021 && ?mM = "PAS_CRD")
+  # Récupération le nombre de passagers transportées
+  ?y	time:year 2018;
+    	ex:declarativeAirport ?airport;
+    	ex:measuredMetric "PAS_CRD";
+    	ex:coverageTransport "NAT";
+        ex:airline "TOTAL";
+    	rdf:value ?transportedPass.
+  
+  # Récupération des détails de l'aéroport
+  ?airport	dbo:iso31661Code ?countryCode;
+      		dbo:icaoLocationIdentifier ?icao.
+
+  # On évite la division par zéro impossible      
+  FILTER( ?nbOfFlights > 0)
 }
-GROUP BY ?from
-ORDER BY DESC(?total)
-LIMIT 25
+ORDER BY DESC(?passengersPerFlight)
+LIMIT 30
