@@ -1,0 +1,21 @@
+#	Requête faite par Alan PROVOST
+
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX ex: <http://example.org/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX time: <http://www.w3.org/2006/time#>
+
+SELECT ?icaoCode ?value
+WHERE {
+  ?x ex:unit "FLIGHT";		#Unité de mesure en nombre de vol
+     ex:airline "TOTAL";	#Toutes les compagnies
+     ex:coverageTransport "TOTAL";	#Tous les types de transports
+     ex:measuredMetric "CAF";		#Tous les vols commerciaux (passagers, fret et courrier)
+     time:year 2020;		#Vols ayant eu lieu en 2020
+     rdf:value ?value;		#Récupération de la valeur du nombre de vol
+     ex:declarativeAirport ?airport.
+  ?airport dbo:iso31661Code "FR";					#Aéroports français
+           dbo:icaoLocationIdentifier ?icaoCode.	#Récupération du code ICAO de l'aéroport
+}
+ORDER BY DESC(?value)	#Tri par ordre decroissant de nombre de vols
+LIMIT 20				#Limitation à 20 résultats
