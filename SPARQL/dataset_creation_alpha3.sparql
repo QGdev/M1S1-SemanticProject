@@ -1,0 +1,87 @@
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX ex: <http://example.org/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX shc: <http://schema.org/Seat>
+PREFIX time: <http://www.w3.org/2006/time#>
+PREFIX m3: <http://purl.org/iot/vocab/m3-lite>
+PREFIX ns: <https://data.nasa.gov/ontologies/atmonto/ATM>
+
+#   Ce fichier contient la requête permettant de créer un fichier Turtle
+#   de notre dataset mais uniquement pour les données annuelles
+
+#   SAUF qu'ici, on remplacera les code pays ISO31661 ALPHA 2 par ceux en
+#   ALPHA 3 pour permettre la réalisation de plus de liens avec d'autres groupes
+
+CONSTRUCT {
+    ?measure    ex:declarativeAirport   ?airport;
+                time:year               ?year_int;
+                rdf:value               ?value;
+                ex:unit                 ?unit;
+                ex:measuredMetric       ?tra_meas;
+                ex:coverageTransport    ?tra_cov;
+                ex:airline              ?airline.
+
+    #   Each rep_airp attributes is transformed into an airport individual
+    ?airport    dbo:iso31661Code            ?countryCodeA3;       #   ISO31661-1 ALPHA 3
+                dbo:icaoLocationIdentifier  ?icaoID.     #   ICAO - 4 LETTERS ID
+}
+FROM <file:../raw_data/avia_tf_ala_linear.csv#encoding=utf-8;header=present;delimiter=comma>
+WHERE {
+
+    BIND (xsd:integer(?TIME_PERIOD) AS ?year_int).
+    #   Useful to have both float and int values in our resulting file
+    BIND (IF (?unit = "T",
+        xsd:float(?OBS_VALUE),
+        xsd:integer(?OBS_VALUE)) AS ?value).
+    
+    #   To get countryCode and icaoID from the rep_airp attribute
+    BIND (SUBSTR(STR(?rep_airp), 1, 2) AS ?countryCode).
+    BIND (SUBSTR(STR(?rep_airp), 4, 4) AS ?icaoID).
+
+
+    #   CONVERSION FROM ALPHA 2 TO ALPHA 3
+    #   Not the most elegant way to do this conversion, but
+    #   it's simple and it works as expected
+    BIND (IF (?countryCode = "AT", "AUT",
+        IF (?countryCode = "BE", "BEL",
+        IF (?countryCode = "BG", "BGR",
+        IF (?countryCode = "CH", "CHE",
+        IF (?countryCode = "CY", "CYP",
+        IF (?countryCode = "CZ", "CZE",
+        IF (?countryCode = "DE", "DEU",
+        IF (?countryCode = "DK", "DNK",
+        IF (?countryCode = "EE", "EST",
+        IF (?countryCode = "EL", "GRC",
+        IF (?countryCode = "ES", "ESP",
+        IF (?countryCode = "FI", "FIN",
+        IF (?countryCode = "FR", "FRA",
+        IF (?countryCode = "HR", "HRV",
+        IF (?countryCode = "HU", "HUN",
+        IF (?countryCode = "IE", "IRL",
+        IF (?countryCode = "IS", "ISL",
+        IF (?countryCode = "IT", "ITA",
+        IF (?countryCode = "LT", "LTU",
+        IF (?countryCode = "LU", "LUX",
+        IF (?countryCode = "LV", "LVA",
+        IF (?countryCode = "ME", "MNE",
+        IF (?countryCode = "MT", "MLT",
+        IF (?countryCode = "MK", "MKD",
+        IF (?countryCode = "MT", "MLT",
+        IF (?countryCode = "NL", "NLD",
+        IF (?countryCode = "NO", "NOR",
+        IF (?countryCode = "PL", "POL",
+        IF (?countryCode = "PT", "PRT",
+        IF (?countryCode = "RO", "ROU",
+        IF (?countryCode = "RS", "SRB",
+        IF (?countryCode = "SE", "SWE",
+        IF (?countryCode = "SI", "SVN",
+        IF (?countryCode = "SK", "SVK",
+        IF (?countryCode = "UK", "GBR", "TUR")))))))))))))))))))))))))))))))))))
+        AS ?countryCodeA3).
+
+    BIND (URI(CONCAT("http://example.org/measure/", STR(?countryCodeA3) ,"/", STR(?icaoID), "/", STR(?TIME_PERIOD), "/", STR(?tra_meas), "/", STR(?tra_cov), "/", STR(?airline))) AS ?measure).
+    BIND (URI(CONCAT("http://example.org/airport/", STR(?countryCodeA3) ,"/", STR(?icaoID))) AS ?airport).
+
+    FILTER(?freq="A")
+}
