@@ -7,6 +7,9 @@ PREFIX time: <http://www.w3.org/2006/time#>
 PREFIX m3: <http://purl.org/iot/vocab/m3-lite>
 PREFIX ns: <https://data.nasa.gov/ontologies/atmonto/ATM>
 
+#   Ce fichier contient la requête permettant de créer un fichier Turtle
+#   de notre dataset mais uniquement pour les données annuelles
+
 CONSTRUCT {
     ?measure    ex:declarativeAirport   ?airport;
                 time:year               ?year_int;
