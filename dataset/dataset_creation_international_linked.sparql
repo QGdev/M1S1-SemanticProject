@@ -1,0 +1,47 @@
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX ex: <http://example.org/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX shc: <http://schema.org/Seat>
+PREFIX time: <http://www.w3.org/2006/time#>
+PREFIX m3: <http://purl.org/iot/vocab/m3-lite>
+PREFIX ns: <https://data.nasa.gov/ontologies/atmonto/ATM>
+
+#   Ce fichier contient la requête permettant de créer un fichier Turtle
+#   de notre dataset mais uniquement pour les données annuelles
+
+#   SAUF qu'ici, on remplacera le code pays européen de la Grèce (EL) par
+#   le code pays internationnal
+
+CONSTRUCT {
+    ?measure    ex:declarativeAirport   ?airport;
+                time:year               ?year_int;
+                rdf:value               ?value;
+                ex:unit                 ?unit;
+                ex:measuredMetric       ?tra_meas;
+                ex:coverageTransport    ?tra_cov;
+                ex:airline              ?airline.
+
+    #   Each rep_airp attributes is transformed into an airport individual
+    #?airport    dbo:iso31661Code            ?countryCode;       #   ISO31661-1 ALPHA 2
+    #            dbo:icaoLocationIdentifier  ?icaoID.     #   ICAO - 4 LETTERS ID
+}
+FROM <file:../raw_data/avia_tf_ala_linear.csv#encoding=utf-8;header=present;delimiter=comma>
+WHERE {
+
+    BIND (xsd:integer(?TIME_PERIOD) AS ?year_int).
+    #   Useful to have both float and int values in our resulting file
+    BIND (IF (?unit = "T",
+        xsd:float(?OBS_VALUE),
+        xsd:integer(?OBS_VALUE)) AS ?value).
+    
+    #   To get countryCode and icaoID from the rep_airp attribute
+    BIND (SUBSTR(STR(?rep_airp), 1, 2) AS ?countryCode_).
+    BIND (IF (?countryCode_ = "EL", "GL", ?countryCode_) AS ?countryCode)
+    BIND (SUBSTR(STR(?rep_airp), 4, 4) AS ?icaoID).
+
+    BIND (URI(CONCAT("http://example.org/measure/", STR(?countryCode) ,"/", STR(?icaoID), "/", STR(?TIME_PERIOD), "/", STR(?tra_meas), "/", STR(?tra_cov), "/", STR(?airline))) AS ?measure).
+    BIND (URI(CONCAT("http://dbpedia.org/resource/", STR(?icaoID))) AS ?airport).
+
+    FILTER(?freq="A")
+}

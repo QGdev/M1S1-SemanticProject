@@ -62,12 +62,12 @@ Une fois traité avec TARQL, on obtient un fichier Turtle contenant environ 10 0
 
 ## Fichiers Turtle
 
-Afin de permettre de la liaison avec le plus de groupes possibles, nous avons développé plusiseurs variantes de notre dataset, voici, les différences entres les différentes versions...
+Afin de permettre de la liaison avec le plus de groupes possibles, nous avons développé plusieurs variantes de notre dataset, voici, les différences entres les différentes versions...
 
 | Fichier     | Format des codes pays <br> *(dbo:iso31661Code)*| Pour commande pour "re-compiler " <br> au format Turtle depuis la racine du projet |
 | ----------- | ---------------------------------------------- | ------------------------------------------------------ |
-| [data.ttl](https://gitlab.univ-nantes.fr/E192263G/semantic-project/-/blob/183ec1f6f15696e1e985498166004800ab2bbb1d/Turtle%20files/data.ttl) <br> *(Original, sans modifications)* | ISO31661-ALPHA2 <br> *(Sauf la Grèce qui est nommé en EL au niveau Européen)* | ```./tarql-1.2/bin/tarql --dedup 10000000  ./dataset_build/dataset_creation_original.sparql > ./turtle_files/data.ttl``` |
-| [data_alpha_3.ttl](https://gitlab.univ-nantes.fr/E192263G/semantic-project/-/blob/183ec1f6f15696e1e985498166004800ab2bbb1d/Turtle%20files/data_alpha_3.ttl) | ISO31661-ALPHA3 | ```./tarql-1.2/bin/tarql --dedup 10000000  ./dataset_build/dataset_creation_alpha3.sparql > ./turtle_files/data_alpha_3.ttl``` |
-| [data_international.ttl](https://gitlab.univ-nantes.fr/E192263G/semantic-project/-/blob/183ec1f6f15696e1e985498166004800ab2bbb1d/Turtle%20files/data_international.ttl) | ISO31661-ALPHA2 <br> *(La Grèce passe de EL à GL)* | ```./tarql-1.2/bin/tarql --dedup 10000000  ./dataset_build/dataset_creation_international.sparql > ./turtle_files/data_international.ttl``` |
+| [data.ttl](https://gitlab.univ-nantes.fr/E192263G/semantic-project/-/blob/183ec1f6f15696e1e985498166004800ab2bbb1d/Turtle%20files/data.ttl) <br> *(Original, sans modifications)* | ISO31661-ALPHA2 <br> *(Sauf la Grèce qui est nommé en EL au niveau Européen)* | ```./tarql-1.2/bin/tarql --dedup 10000000  ./dataset/dataset_creation_original.sparql > ./turtle_files/data.ttl``` |
+| [data_alpha_3.ttl](https://gitlab.univ-nantes.fr/E192263G/semantic-project/-/blob/183ec1f6f15696e1e985498166004800ab2bbb1d/Turtle%20files/data_alpha_3.ttl) | ISO31661-ALPHA3 | ```./tarql-1.2/bin/tarql --dedup 10000000  ./dataset/dataset_creation_alpha3.sparql > ./turtle_files/data_alpha_3.ttl``` |
+| [data_international.ttl](https://gitlab.univ-nantes.fr/E192263G/semantic-project/-/blob/183ec1f6f15696e1e985498166004800ab2bbb1d/Turtle%20files/data_international.ttl) | ISO31661-ALPHA2 <br> *(La Grèce passe de EL à GL)* | ```./tarql-1.2/bin/tarql --dedup 10000000  ./dataset/dataset_creation_international.sparql > ./turtle_files/data_international.ttl``` |
 
 Bien sûr, seuls les codes pays ont été modifiés, les codes ICAO et les différentes valeurs restent inchangées quelque soit la version.
