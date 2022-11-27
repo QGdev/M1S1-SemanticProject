@@ -11,7 +11,7 @@ SELECT  ?countryCode ?icao ?nbOfFlights ?transportedPass (xsd:float(xsd:integer(
 
 WHERE {
   # Récupération le nombre de vols commerciaux de passagers
-  ?x	time:year 2018;
+  ?x	dbo:year 2018;
     	ex:declarativeAirport ?airport;
     	ex:measuredMetric "CAF_PAS";
     	ex:coverageTransport "NAT";
@@ -19,7 +19,7 @@ WHERE {
     	rdf:value ?nbOfFlights.
   
   # Récupération le nombre de passagers transportées
-  ?y	time:year 2018;
+  ?y	dbo:year 2018;
     	ex:declarativeAirport ?airport;
     	ex:measuredMetric "PAS_CRD";
     	ex:coverageTransport "NAT";
@@ -31,7 +31,8 @@ WHERE {
       		dbo:icaoLocationIdentifier ?icao.
 
   # On évite la division par zéro impossible      
-  FILTER( ?nbOfFlights > 0)
+  FILTER(?nbOfFlights > 0)
+  FILTER(STRLEN(?countryCode) = 2)	# Pour pouvoir éviter les doublons sur certaines versions du dataset 
 }
 ORDER BY DESC(?passengersPerFlight)
 LIMIT 30

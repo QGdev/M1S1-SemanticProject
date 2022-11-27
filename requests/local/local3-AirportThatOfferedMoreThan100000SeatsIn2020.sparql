@@ -11,7 +11,7 @@ PREFIX time: <http://www.w3.org/2006/time#>
 SELECT ?countryCode ?icao ?nbOfSeat
 WHERE {
 	#	Récuperation de nombre de siégés passagers offerts.
-	?x	time:year    2020;
+	?x	dbo:year    2020;
       	ex:declarativeAirport ?airport;
 		ex:measuredMetric "ST_PAS";
   		ex:coverageTransport "TOTAL";
@@ -20,7 +20,8 @@ WHERE {
 	#	Récuperation de code de pays et de l'dentifant des aéroports
   	?airport	dbo:iso31661Code ?countryCode;
 				dbo:icaoLocationIdentifier ?icao.
-	FILTER(?nbOfSeat>=100000 )
+	FILTER(?nbOfSeat>=100000)
+	FILTER(STRLEN(?countryCode) = 2)	# Pour pouvoir éviter les doublons sur certaines versions du dataset 
 }
 ORDER BY ASC (?nbOfSeat)
 LIMIT 40
