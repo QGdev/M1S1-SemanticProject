@@ -21,36 +21,39 @@ Il est sous la licence CC BY 4.0 et est disponible à l'adresse suivante [https:
 En l'état, le fichier CSV n'est pas traitable au vu de sa taille (1,3Go), nous allons donc traiter uniquement les données annuelles, on utilise donc SPARQL et pour trancrire notre dataset en Turtle, avec le fichier dataset_crea_annuel.sparql.
 
 ```plantuml
-    @startuml
+   @startuml
     skinparam componentStyle rectangle
 
-    circle (http://example.org/airport/FR/LFPG)
+        circle (http://example.org/airport/FR/LFPG)
 
-    [LFPG] <-- (http://example.org/airport/FR/LFPG) : "dbo:icaoLocationIdentifier"
-    [FR] <-- (http://example.org/airport/FR/LFPG) : "dbo:iso31661Code"
+        [LFPG] <-- (http://example.org/airport/FR/LFPG) : "dbo:icaoLocationIdentifier"
+        [FR] <-- (http://example.org/airport/FR/LFPG) : "dbo:iso31661Code (*)"
+        [FRA] <-- (http://example.org/airport/FR/LFPG) : "dbo:iso31661Code (*)"
+        [France] <-- (http://example.org/airport/FR/LFPG) : "dbo:country (*)"
 
-    circle (http://example.org/measure/FR/LFPG/2011/CAF/INTL/LIC_EU)
+        circle (http://example.org/measure/FR/LFPG/2011/CAF/INTL/LIC_EU)
 
-    (2011) <-- (http://example.org/measure/FR/LFPG/2011/CAF/INTL/LIC_EU) : "time:year"
-    (360735) <-- (http://example.org/measure/FR/LFPG/2011/CAF/INTL/LIC_EU) : "rdf:value"
-    [FLIGHT] <-- (http://example.org/measure/FR/LFPG/2011/CAF/INTL/LIC_EU) : "ex:unit"
-    [CAF] <-- (http://example.org/measure/FR/LFPG/2011/CAF/INTL/LIC_EU) : "ex:measuredMetric"
-    [INTL] <-- (http://example.org/measure/FR/LFPG/2011/CAF/INTL/LIC_EU) : "ex:coverageTransport"
-    [LIC_EU] <-- (http://example.org/measure/FR/LFPG/2011/CAF/INTL/LIC_EU) : "ex:airline"
+        (2011) <-- (http://example.org/measure/FR/LFPG/2011/CAF/INTL/LIC_EU) : "dbo:year"
+        (360735) <-- (http://example.org/measure/FR/LFPG/2011/CAF/INTL/LIC_EU) : "rdf:value"
+        [FLIGHT] <-- (http://example.org/measure/FR/LFPG/2011/CAF/INTL/LIC_EU) : "ex:unit"
+        [CAF] <-- (http://example.org/measure/FR/LFPG/2011/CAF/INTL/LIC_EU) : "ex:measuredMetric"
+        [INTL] <-- (http://example.org/measure/FR/LFPG/2011/CAF/INTL/LIC_EU) : "ex:coverageTransport"
+        [LIC_EU] <-- (http://example.org/measure/FR/LFPG/2011/CAF/INTL/LIC_EU) : "ex:airline"
 
-    circle (http://example.org/measure/FR/LFPG/2010/FRM_BRD/NAT/TOTAL)
+        circle (http://example.org/measure/FR/LFPG/2010/FRM_BRD/NAT/TOTAL)
 
-    (2010) <-- (http://example.org/measure/FR/LFPG/2010/FRM_BRD/NAT/TOTAL) : "time:year"
-    (45336.2) <-d- (http://example.org/measure/FR/LFPG/2010/FRM_BRD/NAT/TOTAL) : "rdf:value"
-    [T] <-- (http://example.org/measure/FR/LFPG/2010/FRM_BRD/NAT/TOTAL) : "ex:unit"
-    [FRM_BRD] <-- (http://example.org/measure/FR/LFPG/2010/FRM_BRD/NAT/TOTAL) : "ex:measuredMetric"
-    [NAT] <-- (http://example.org/measure/FR/LFPG/2010/FRM_BRD/NAT/TOTAL) : "ex:coverageTransport"
-    [TOTAL] <-- (http://example.org/measure/FR/LFPG/2010/FRM_BRD/NAT/TOTAL) : "ex:airline"
+        (2010) <-- (http://example.org/measure/FR/LFPG/2010/FRM_BRD/NAT/TOTAL) : "dbo:year"
+        (45336.2) <-d- (http://example.org/measure/FR/LFPG/2010/FRM_BRD/NAT/TOTAL) : "rdf:value"
+        [T] <-- (http://example.org/measure/FR/LFPG/2010/FRM_BRD/NAT/TOTAL) : "ex:unit"
+        [FRM_BRD] <-- (http://example.org/measure/FR/LFPG/2010/FRM_BRD/NAT/TOTAL) : "ex:measuredMetric"
+        [NAT] <-- (http://example.org/measure/FR/LFPG/2010/FRM_BRD/NAT/TOTAL) : "ex:coverageTransport"
+        [TOTAL] <-- (http://example.org/measure/FR/LFPG/2010/FRM_BRD/NAT/TOTAL) : "ex:airline"
 
 
-    (http://example.org/airport/FR/LFPG) <-up- (http://example.org/measure/FR/LFPG/2011/CAF/INTL/LIC_EU) : "ex:declarativeAirport"
-    (http://example.org/airport/FR/LFPG) <-up- (http://example.org/measure/FR/LFPG/2010/FRM_BRD/NAT/TOTAL) : "ex:declarativeAirport"
+        (http://example.org/airport/FR/LFPG) <-up- (http://example.org/measure/FR/LFPG/2011/CAF/INTL/LIC_EU) : "ex:declarativeAirport"
+        (http://example.org/airport/FR/LFPG) <-up- (http://example.org/measure/FR/LFPG/2010/FRM_BRD/NAT/TOTAL) : "ex:declarativeAirport"
 
+    right footer "(*) :Peut-être absent selon les versions"
     @enduml
 ```
 
@@ -64,10 +67,11 @@ Une fois traité avec TARQL, on obtient un fichier Turtle contenant environ 10 0
 
 Afin de permettre de la liaison avec le plus de groupes possibles, nous avons développé plusieurs variantes de notre dataset, voici, les différences entres les différentes versions...
 
-| Fichier     | Format des codes pays <br> *(dbo:iso31661Code)*| Pour commande pour "re-compiler " <br> au format Turtle depuis la racine du projet |
-| ----------- | ---------------------------------------------- | ------------------------------------------------------ |
-| [data.ttl](https://gitlab.univ-nantes.fr/E192263G/semantic-project/-/blob/183ec1f6f15696e1e985498166004800ab2bbb1d/Turtle%20files/data.ttl) <br> *(Original, sans modifications)* | ISO31661-ALPHA2 <br> *(Sauf la Grèce qui est nommé en EL au niveau Européen)* | ```./tarql-1.2/bin/tarql --dedup 10000000  ./dataset/dataset_creation_original.sparql > ./turtle_files/data.ttl``` |
-| [data_alpha_3.ttl](https://gitlab.univ-nantes.fr/E192263G/semantic-project/-/blob/183ec1f6f15696e1e985498166004800ab2bbb1d/Turtle%20files/data_alpha_3.ttl) | ISO31661-ALPHA3 | ```./tarql-1.2/bin/tarql --dedup 10000000  ./dataset/dataset_creation_alpha3.sparql > ./turtle_files/data_alpha_3.ttl``` |
-| [data_international.ttl](https://gitlab.univ-nantes.fr/E192263G/semantic-project/-/blob/183ec1f6f15696e1e985498166004800ab2bbb1d/Turtle%20files/data_international.ttl) | ISO31661-ALPHA2 <br> *(La Grèce passe de EL à GL)* | ```./tarql-1.2/bin/tarql --dedup 10000000  ./dataset/dataset_creation_international.sparql > ./turtle_files/data_international.ttl``` |
+| Fichier     | Format des codes pays <br> *(dbo:iso31661Code)*| Contient les noms de pays <br> *(dbo:country)* | Pour commande pour "re-compiler " <br> au format Turtle depuis la racine du projet |
+| ----------- | ---------------------------------------------- | ---------------------------------------------- | ---------------------------------------------------------------------------------- |
+| [data_original.ttl](https://gitlab.univ-nantes.fr/E192263G/semantic-project/-/blob/183ec1f6f15696e1e985498166004800ab2bbb1d/turtle%20files/data_original.ttl) <br> *(Original, sans modifications)* | ISO31661-ALPHA2 <br> *(Sauf la Grèce qui est nommé en EL au niveau Européen)*  | Non | ```./tarql-1.2/bin/tarql --dedup 10000000  ./dataset/dataset_creation_original.sparql > turtle_files/data_original.ttl``` |
+| [data_alpha_3_countryname.ttl](https://gitlab.univ-nantes.fr/E192263G/semantic-project/-/blob/183ec1f6f15696e1e985498166004800ab2bbb1d/turtle%20files/data_alpha_3_countryname.ttl) | ISO31661-ALPHA3 | Oui | ```./tarql-1.2/bin/tarql --dedup 10000000  ./dataset/dataset_creation_alpha3_countryname.sparql > turtle_files/data_alpha_3_countryname.ttl``` |
+| [data_international_countryname.ttl](https://gitlab.univ-nantes.fr/E192263G/semantic-project/-/blob/183ec1f6f15696e1e985498166004800ab2bbb1d/turtle%20files/data_international_countryname.ttl) | ISO31661-ALPHA2 <br> *(La Grèce passe de EL à GL)*  | Oui | ```./tarql-1.2/bin/tarql --dedup 10000000  ./dataset/dataset_creation_international_countryname.sparql > turtle_files/data_international_countryname.ttl``` |
+| [data_complete.ttl](https://gitlab.univ-nantes.fr/E192263G/semantic-project/-/blob/183ec1f6f15696e1e985498166004800ab2bbb1d/turtle%20files/data_complete.ttl) | ISO31661-ALPHA2 *(La Grèce passe de EL à GL)* <br> ISO31661-ALPHA3 | Oui | ```./tarql-1.2/bin/tarql --dedup 10000000  ./dataset/dataset_creation_complete.sparql > turtle_files/data_complete.ttl``` |
 
 Bien sûr, seuls les codes pays ont été modifiés, les codes ICAO et les différentes valeurs restent inchangées quelque soit la version.

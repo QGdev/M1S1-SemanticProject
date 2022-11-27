@@ -2,20 +2,19 @@ PREFIX dbo: <http://dbpedia.org/ontology/>
 PREFIX ex: <http://example.org/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX shc: <http://schema.org/Seat>
 PREFIX time: <http://www.w3.org/2006/time#>
-PREFIX m3: <http://purl.org/iot/vocab/m3-lite>
-PREFIX ns: <https://data.nasa.gov/ontologies/atmonto/ATM>
+
 
 #   Ce fichier contient la requête permettant de créer un fichier Turtle
 #   de notre dataset mais uniquement pour les données annuelles
 
-#   SAUF qu'ici, on remplacera les code pays ISO31661 ALPHA 2 par ceux en
-#   ALPHA 3 pour permettre la réalisation de plus de liens avec d'autres groupes
+#   SAUF qu'ici, on remplacera les codes pays ISO31661 ALPHA 2 par ceux en
+#   ALPHA 3 pour permettre la réalisation de plus de liens avec d'autres
+#   groupes et on intégrera le nom du pays
 
 CONSTRUCT {
     ?measure    ex:declarativeAirport   ?airport;
-                time:year               ?year_int;
+                dbo:year               ?year_int;
                 rdf:value               ?value;
                 ex:unit                 ?unit;
                 ex:measuredMetric       ?tra_meas;
@@ -23,8 +22,10 @@ CONSTRUCT {
                 ex:airline              ?airline.
 
     #   Each rep_airp attributes is transformed into an airport individual
-    ?airport    dbo:iso31661Code            ?countryCodeA3;       #   ISO31661-1 ALPHA 3
-                dbo:icaoLocationIdentifier  ?icaoID.     #   ICAO - 4 LETTERS ID
+    ?airport    dbo:iso31661Code            ?countryCodeA3;     #   ISO31661-1 ALPHA 3
+                dbo:iso31661Code            ?countryCodeA2;     #   ISO31661-1 ALPHA 2
+                dbo:country                 ?countryName;       #   English country name
+                dbo:icaoLocationIdentifier  ?icaoID.            #   ICAO - 4 LETTERS ID
 }
 FROM <file:../raw_data/avia_tf_ala_linear.csv#encoding=utf-8;header=present;delimiter=comma>
 WHERE {
@@ -39,6 +40,7 @@ WHERE {
     BIND (SUBSTR(STR(?rep_airp), 1, 2) AS ?countryCode).
     BIND (SUBSTR(STR(?rep_airp), 4, 4) AS ?icaoID).
 
+    BIND (IF (?countryCode = "EL", "GL", ?countryCode) AS ?countryCodeA2)
 
     #   CONVERSION FROM ALPHA 2 TO ALPHA 3
     #   Not the most elegant way to do this conversion, but
@@ -79,6 +81,46 @@ WHERE {
         IF (?countryCode = "SK", "SVK",
         IF (?countryCode = "UK", "GBR", "TUR")))))))))))))))))))))))))))))))))))
         AS ?countryCodeA3).
+
+    #   CONVERSION FROM ALPHA 2 TO Country Name
+    #   Not the most elegant way to do this conversion, but
+    #   it's simple and it works as expected
+    BIND (IF (?countryCode = "AT", "Austria",
+        IF (?countryCode = "BE", "Belgium",
+        IF (?countryCode = "BG", "Bulgaria",
+        IF (?countryCode = "CH", "Switzerland",
+        IF (?countryCode = "CY", "Cyprus",
+        IF (?countryCode = "CZ", "Czechia",
+        IF (?countryCode = "DE", "Germany",
+        IF (?countryCode = "DK", "Denmark",
+        IF (?countryCode = "EE", "Estonia",
+        IF (?countryCode = "EL", "Greece",
+        IF (?countryCode = "ES", "Spain",
+        IF (?countryCode = "FI", "Finland",
+        IF (?countryCode = "FR", "France",
+        IF (?countryCode = "HR", "Croatia",
+        IF (?countryCode = "HU", "Hungary",
+        IF (?countryCode = "IE", "Ireland",
+        IF (?countryCode = "IS", "Iceland",
+        IF (?countryCode = "IT", "Italy",
+        IF (?countryCode = "LT", "Lithuania",
+        IF (?countryCode = "LU", "Luxembourg",
+        IF (?countryCode = "LV", "Latvia",
+        IF (?countryCode = "ME", "Montenegro",
+        IF (?countryCode = "MT", "Malta",
+        IF (?countryCode = "MK", "North Macedonia",
+        IF (?countryCode = "MT", "Malta",
+        IF (?countryCode = "NL", "Netherlands",
+        IF (?countryCode = "NO", "Norway",
+        IF (?countryCode = "PL", "Poland",
+        IF (?countryCode = "PT", "Portugal",
+        IF (?countryCode = "RO", "Romania",
+        IF (?countryCode = "RS", "Serbia",
+        IF (?countryCode = "SE", "Sweden",
+        IF (?countryCode = "SI", "Slovenia",
+        IF (?countryCode = "SK", "Slovakia",
+        IF (?countryCode = "UK", "United Kingdom", "Türkiye")))))))))))))))))))))))))))))))))))
+        AS ?countryName).
 
     BIND (URI(CONCAT("http://example.org/measure/", STR(?countryCodeA3) ,"/", STR(?icaoID), "/", STR(?TIME_PERIOD), "/", STR(?tra_meas), "/", STR(?tra_cov), "/", STR(?airline))) AS ?measure).
     BIND (URI(CONCAT("http://example.org/airport/", STR(?countryCodeA3) ,"/", STR(?icaoID))) AS ?airport).
