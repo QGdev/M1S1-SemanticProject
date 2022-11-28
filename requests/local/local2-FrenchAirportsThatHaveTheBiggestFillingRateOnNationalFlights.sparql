@@ -1,0 +1,37 @@
+#	Requête faite par Quentin GOMES DOS REIS
+
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX ex: <http://example.org/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+
+# Affichage des données intéressantes ainsi que le pourcentage d'occupation
+SELECT ?icao ?transportedPass ?nbOfSeats ((xsd:float(xsd:integer(?transportedPass))/xsd:integer(?nbOfSeats)) * 100 AS ?usageRate) ?year
+
+WHERE {
+  # Récupération le nombre de passagers transportées
+  ?x	dbo:year ?year;
+    	ex:declarativeAirport ?airport;
+    	ex:measuredMetric "PAS_CRD";
+    	ex:coverageTransport "NAT";
+        ex:airline "TOTAL";
+    	rdf:value ?transportedPass.
+  
+  # Récupération le nombre de places offertes
+  ?y	dbo:year ?year;
+    	ex:declarativeAirport ?airport;
+    	ex:measuredMetric "ST_PAS";
+    	ex:coverageTransport "NAT";
+        ex:airline "TOTAL";
+    	rdf:value ?nbOfSeats.
+  
+  # Récupération des détails de l'aéroport
+  ?airport	dbo:country "France";
+      		  dbo:icaoLocationIdentifier ?icao.
+
+  # On évite la division par zéro impossible
+  # Et on filtre, les valeurs qui donneraient des résultats éronnés    
+  FILTER(?nbOfSeats > 0 && ?transportedPass <= ?nbOfSeats)
+}
+ORDER BY DESC(?usageRate)
+LIMIT 30
