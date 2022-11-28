@@ -22,17 +22,20 @@ En l'état, le fichier CSV n'est pas traitable au vu de sa taille (1,3Go), nous 
 
 ```plantuml
    @startuml
-    skinparam componentStyle rectangle
+        skinparam componentStyle rectangle
 
         circle (http://example.org/airport/FR/LFPG)
 
-        [LFPG] <-- (http://example.org/airport/FR/LFPG) : "dbo:icaoLocationIdentifier"
-        [FR] <-- (http://example.org/airport/FR/LFPG) : "dbo:iso31661Code (*)"
-        [FRA] <-- (http://example.org/airport/FR/LFPG) : "dbo:iso31661Code (*)"
-        [France] <-- (http://example.org/airport/FR/LFPG) : "dbo:country (*)"
+        [LFPG] <-u- (http://example.org/airport/FR/LFPG) : "dbo:icaoLocationIdentifier"
+        [FR] <-u- (http://example.org/airport/FR/LFPG) : "dbo:iso31661Code"
+        [FRA] <-u- (http://example.org/airport/FR/LFPG) : "dbo:iso31661Code"
+        [France] <-u- (http://example.org/airport/FR/LFPG) : "dbo:country"
+        [dbo:Airport] <-u- (http://example.org/airport/FR/LFPG) : "rdf:type"
 
         circle (http://example.org/measure/FR/LFPG/2011/CAF/INTL/LIC_EU)
 
+        [ex:AirportMetricValue] as type1
+        type1 <-- (http://example.org/measure/FR/LFPG/2011/CAF/INTL/LIC_EU) : "rdf:type"
         (2011) <-- (http://example.org/measure/FR/LFPG/2011/CAF/INTL/LIC_EU) : "dbo:year"
         (360735) <-- (http://example.org/measure/FR/LFPG/2011/CAF/INTL/LIC_EU) : "rdf:value"
         [FLIGHT] <-- (http://example.org/measure/FR/LFPG/2011/CAF/INTL/LIC_EU) : "ex:unit"
@@ -40,8 +43,12 @@ En l'état, le fichier CSV n'est pas traitable au vu de sa taille (1,3Go), nous 
         [INTL] <-- (http://example.org/measure/FR/LFPG/2011/CAF/INTL/LIC_EU) : "ex:coverageTransport"
         [LIC_EU] <-- (http://example.org/measure/FR/LFPG/2011/CAF/INTL/LIC_EU) : "ex:airline"
 
+
         circle (http://example.org/measure/FR/LFPG/2010/FRM_BRD/NAT/TOTAL)
 
+
+        [ex:AirportMetricValue] as type2
+        type2 <-- (http://example.org/measure/FR/LFPG/2010/FRM_BRD/NAT/TOTAL) : "rdf:type"
         (2010) <-- (http://example.org/measure/FR/LFPG/2010/FRM_BRD/NAT/TOTAL) : "dbo:year"
         (45336.2) <-d- (http://example.org/measure/FR/LFPG/2010/FRM_BRD/NAT/TOTAL) : "rdf:value"
         [T] <-- (http://example.org/measure/FR/LFPG/2010/FRM_BRD/NAT/TOTAL) : "ex:unit"
@@ -49,12 +56,9 @@ En l'état, le fichier CSV n'est pas traitable au vu de sa taille (1,3Go), nous 
         [NAT] <-- (http://example.org/measure/FR/LFPG/2010/FRM_BRD/NAT/TOTAL) : "ex:coverageTransport"
         [TOTAL] <-- (http://example.org/measure/FR/LFPG/2010/FRM_BRD/NAT/TOTAL) : "ex:airline"
 
-
         (http://example.org/airport/FR/LFPG) <-up- (http://example.org/measure/FR/LFPG/2011/CAF/INTL/LIC_EU) : "ex:declarativeAirport"
         (http://example.org/airport/FR/LFPG) <-up- (http://example.org/measure/FR/LFPG/2010/FRM_BRD/NAT/TOTAL) : "ex:declarativeAirport"
-
-    right footer "(*) :Peut-être absent selon les versions"
-    @enduml
+@enduml
 ```
 
 Une fois traité avec TARQL, on obtient un fichier Turtle contenant environ 10 090 461 triples, ci-dessus, voici un exemples de structure de données de notre fichier Turtle.
