@@ -3,12 +3,11 @@
 PREFIX dbo: <http://dbpedia.org/ontology/>
 PREFIX ex: <http://example.org/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX time: <http://www.w3.org/2006/time#>
 
-#	Affichage de nombre des siéges passagers offerts qui est superieur à 100 000
+#	Affichage de nombre des sièges passagers offerts qui est superieur à 100 000
 #	par ordre croissant en 2020 et l'affichage est limité à 40 entitées
 
-SELECT ?countryCode ?icao ?nbOfSeat
+SELECT ?countryName ?icao ?nbOfSeat
 WHERE {
 	#	Récuperation de nombre de siégés passagers offerts.
 	?x	dbo:year    2020;
@@ -18,10 +17,10 @@ WHERE {
 		ex:airline "TOTAL";
 		rdf:value    ?nbOfSeat.
 	#	Récuperation de code de pays et de l'dentifant des aéroports
-  	?airport	dbo:iso31661Code ?countryCode;
+  	?airport	dbo:country ?countryName;
 				dbo:icaoLocationIdentifier ?icao.
 	FILTER(?nbOfSeat>=100000)
-	FILTER(STRLEN(?countryCode) = 2)	# Pour pouvoir éviter les doublons sur certaines versions du dataset 
 }
+
 ORDER BY ASC (?nbOfSeat)
 LIMIT 40
