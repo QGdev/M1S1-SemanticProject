@@ -21,13 +21,15 @@ CONSTRUCT {
                 ex:unit                 ?unit;
                 ex:measuredMetric       ?tra_meas;
                 ex:coverageTransport    ?tra_cov;
-                ex:airline              ?airline.
+                ex:airline              ?airline;
+                rdf:type                ex:AirportMetricValue.
 
     #   Each rep_airp attributes is transformed into an airport individual
     ?airport    dbo:iso31661Code            ?countryCodeA3;     #   ISO31661-1 ALPHA 3
                 dbo:iso31661Code            ?countryCodeA2;     #   ISO31661-1 ALPHA 2
                 dbo:country                 ?countryName;       #   English country name
-                dbo:icaoLocationIdentifier  ?icaoID.            #   ICAO - 4 LETTERS ID
+                dbo:icaoLocationIdentifier  ?icaoID;            #   ICAO - 4 LETTERS ID
+                rdf:type                    dbo:Airport.
 }
 FROM <file:../raw_data/avia_tf_ala_linear.csv#encoding=utf-8;header=present;delimiter=comma>
 WHERE {
