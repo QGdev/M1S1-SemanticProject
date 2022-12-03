@@ -20,7 +20,7 @@
                     rdfs:comment    "Used to describe a single seat in a plane in our dataset {[ST_PAS]}";
                     rdfs:label      "Seat".
 
-    # DESCRIBING measuredMetric
+# DESCRIBING measuredMetric
 
     :FRM_BRD        rdf:type        owl:Class;
                     owl:sameAs      m3:Tonne;
@@ -28,12 +28,12 @@
                     rdfs:label      "FRM_BRD".
 
     :FRM_LD_NLD     rdf:type        owl:Class;
-                    owl:sameAs      dbo:Person;
+                    owl:sameAs      m3:Tonne;
                     rdfs:comment    "Used to describe Freight and mail loaded and unloaded";
                     rdfs:label      "FRM_LD_NLD".
 
     :PAS_BRD        rdf:type        owl:Class;
-                    owl:sameAs      ns:Flight;
+                    owl:sameAs      dbo:Personn
                     rdfs:comment    "Used to describe Passengers on board";
                     rdfs:label      "PAS_BRD".
 
