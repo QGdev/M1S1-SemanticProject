@@ -1,0 +1,38 @@
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ex: <http://example.org/>
+PREFIX ex2: <http://ex.org/#>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbpedia: <http://dbpedia.org/ontology/>
+
+#
+#   REQUÊTE AVEC LE GROUPE 4
+#       Affiche le nom du pays, la quantitée de Co2 émis par le pays en Tonne Cubique mais également
+#       le nombre de vols (passagers, courrier et fret inclus) effectués par les principaux aéroports
+#       de ce dernier en 2010
+#       Le tout trié de manière décroissante sur le nombre de vols
+#
+
+SELECT ?countryName (xsd:float(?valeur) AS ?valeurTonneCubique)  (SUM(?nbVols) AS?TotalNbVols)
+WHERE {
+  ?measure	ex:declarativeAirport	?airport;
+  			dbo:year				2010;       #   On spécifie l'année
+     		ex:unit					"FLIGHT";   #   On veut le nombre de vols
+  	     	ex:airline				"TOTAL";    #   Toutes compagnies confondues
+         	ex:coverageTransport	"TOTAL";    #   Toutes destinations confondues
+          	ex:measuredMetric		"CAF";      #   Passagers, courrier et fret
+  			rdf:value				?nbVols.
+    
+  ?airport	dbo:iso31661Code		?countryCode;
+           	dbo:country				?countryName.
+
+  SERVICE <http://127.0.0.1:3030/groupe4/sparql>{
+  	?x		dbo:iso31661Code		?countryCode;
+       		ex2:data				?data.
+    
+    ?data	dbpedia:year			2010;       #   On spécifie l'année
+          	ex2:value				?valeur.
+  }
+}
+GROUP BY ?countryName ?valeur
+ORDER BY DESC (?TotalNbVols)
