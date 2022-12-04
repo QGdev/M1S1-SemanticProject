@@ -3,10 +3,10 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ex: <http://example.org/>
 PREFIX ex2: <http://ex.org/#>
 PREFIX dbo: <http://dbpedia.org/ontology/>
-PREFIX dbpedia: <http://dbpedia.org/ontology/>
+PREFIX dbpedia: <http://dbpedia.org/ontology>
 
 #
-#   REQUÊTE AVEC LE GROUPE 4
+#   REQUÊTE AVEC LE GROUPE 4	(Fichier CO2.V3.ttl pris le 04.12.2022)
 #       Affiche le nom du pays, la quantitée de Co2 émis par le pays en Tonne Cubique mais également
 #       le nombre de vols (passagers, courrier et fret inclus) effectués par les principaux aéroports
 #       de ce dernier en 2010
