@@ -99,7 +99,6 @@ Nous avons effectué trois exemples de requêtes liées, les voici...
 
 | Fichier | Groupe de liaison | Résumé |
 | ------- | ----------------- | ------ | 
-| [grp3-IsHDIRelatedToNbPassengerFlightIn2017.sparql](https://gitlab.univ-nantes.fr/E192263G/semantic-project/-/blob/main/requests/linked/grp3-IsHDIRelatedToNbPassengerFlightIn2017.sparql) | 3 | Le nombre de vols de passagers est-il relatif à l’HDI d’un pays en 2017 ?
- |
+| [grp3-IsHDIRelatedToNbPassengerFlightIn2017.sparql](https://gitlab.univ-nantes.fr/E192263G/semantic-project/-/blob/main/requests/linked/grp3-IsHDIRelatedToNbPassengerFlightIn2017.sparql) | 3 | Le nombre de vols de passagers est-il relatif à l’HDI d’un pays en 2017 ? |
 | [grp4-EmittedCo2AndNbOfFlightsIn2010.sparql](https://gitlab.univ-nantes.fr/E192263G/semantic-project/-/blob/main/requests/linked/grp4-EmittedCo2AndNbOfFlightsIn2010.sparql) | 4 |Affichage de la quantité de Co2 émise et du nombre de vols par pays en 2010 |
 | [grp7-isStartuoFundingRelatedToNbOfFlightIn2014.sparql](https://gitlab.univ-nantes.fr/E192263G/semantic-project/-/blob/main/requests/linked/grp7-isStartuoFundingRelatedToNbOfFlightIn2014.sparql) | 7 | Le nombre de vols est-il relatif au total des levées de fonds par pays en 2014 ? |
