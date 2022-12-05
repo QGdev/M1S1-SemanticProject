@@ -61,7 +61,7 @@ En l'état, le fichier CSV n'est pas traitable au vu de sa taille (1,3Go), nous 
 @enduml
 ```
 
-Une fois traité avec TARQL, on obtient un fichier Turtle contenant environ 10 090 461 triples, ci-dessus, voici un exemples de structure de données de notre fichier Turtle.
+Une fois traité avec TARQL, on obtient un fichier Turtle contenant environ 11 536 926 triples, ci-dessus, voici un exemples de structure de données de notre fichier Turtle.
 
 > **:warning: ATTENTION:**\
 >  Les types des valeurs des mesures changent en fonction du type de mesure, si la mesure est une masse, le type sera float sinon le type sera entier. 
@@ -73,7 +73,7 @@ Afin de permettre de la liaison avec le plus de groupes possibles, nous avons d�
 
 | Fichier     | Format des codes pays <br> *(dbo:iso31661Code)*| Contient les noms de pays <br> *(dbo:country)* | Pour commande pour "re-compiler " <br> au format Turtle depuis la racine du projet |
 | ----------- | ---------------------------------------------- | ---------------------------------------------- | ---------------------------------------------------------------------------------- |
-| [data_original.ttl](https://gitlab.univ-nantes.fr/E192263G/semantic-project/-/blob/main/turtle_files/data_original.ttl) <br> *(Original, sans modifications)* | ISO31661-ALPHA2 <br> *(Sauf la Grèce qui est nommé en EL au niveau Européen)*  | Non | ```./tarql-1.2/bin/tarql --dedup 10000000  ./dataset/dataset_creation_original.sparql > turtle_files/data_original.ttl``` |
-| [data_complete.ttl](https://gitlab.univ-nantes.fr/E192263G/semantic-project/-/blob/main/turtle_files/data_complete.ttl) | ISO31661-ALPHA2 *(La Grèce passe de EL à GL)* <br> ISO31661-ALPHA3 | Oui | ```./tarql-1.2/bin/tarql --dedup 10000000  ./dataset/dataset_creation_complete.sparql > turtle_files/data_complete.ttl``` |
+| [data_original.ttl](https://gitlab.univ-nantes.fr/E192263G/semantic-project/-/blob/main/dataset/data_original.ttl) <br> *(Original, sans modifications)* | ISO31661-ALPHA2 <br> *(Sauf la Grèce qui est nommé en EL au niveau Européen)*  | Non | ```./tarql-1.2/bin/tarql --dedup 10000000  ./build/dataset_creation_original.sparql > dataset/data_original.ttl``` |
+| [data_complete.ttl](https://gitlab.univ-nantes.fr/E192263G/semantic-project/-/blob/main/dataset/data_complete.ttl)  <br> *(Version finale, celle qui est retenue)* |  ISO31661-ALPHA2 *(La Grèce passe de EL à GL)* <br> ISO31661-ALPHA3 | Oui | ```./tarql-1.2/bin/tarql --dedup 10000000  ./build/dataset_creation_complete.sparql > dataset/data_complete.ttl``` |
 
 Bien sûr, seuls les codes pays ont été modifiés, les codes ICAO et les différentes valeurs restent inchangées quelque soit la version.
