@@ -2,7 +2,6 @@ PREFIX dbo: <http://dbpedia.org/ontology/>
 PREFIX ex: <http://example.org/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX time: <http://www.w3.org/2006/time#>
 
 #   Ce fichier contient la requête permettant de créer un fichier Turtle
 #   de notre dataset mais uniquement pour les données annuelles
