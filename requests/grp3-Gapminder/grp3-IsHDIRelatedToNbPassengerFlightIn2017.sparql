@@ -19,7 +19,7 @@ WHERE {
   	    ex:airline				"TOTAL";    #   Toutes compagnies confondues
         ex:coverageTransport	"TOTAL";    #   Toutes destinations confondues
         ex:measuredMetric		"CAF_PAS";  #   Uniquement les vols commerciaux de passagers
-        rdf:value				?nbVolsPassagers
+        rdf:value				?nbVolsPassagers.
   
   SERVICE <http://127.0.0.1:3030/groupe3/query>{
   	?y	dbp:country					?countryName;
