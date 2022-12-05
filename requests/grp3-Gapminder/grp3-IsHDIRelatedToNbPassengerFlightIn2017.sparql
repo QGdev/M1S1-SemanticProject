@@ -1,0 +1,31 @@
+PREFIX ex: <http://example.org/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+
+#
+#   REQUÊTE AVEC LE GROUPE 5    (Fichier DataWithTarql.ttl pris le 04.12.2022)
+#       Affiche le nom du pays, l'HDI du pays mais également le nombre de vols 
+#       commerciaux de passagers effectués par les principaux aéroports de ce
+#       dernier en 2017
+#
+
+SELECT ?countryName ?hdi (SUM(?nbVolsPassagers) AS ?TotalVolsPassagers)
+WHERE {
+	?x	ex:declarativeAirport/dbo:country	?countryName;
+  		dbo:year				2017;       #   On spécifie l'année
+     	ex:unit					"FLIGHT";   #   On veut le nombre de vols
+  	    ex:airline				"TOTAL";    #   Toutes compagnies confondues
+        ex:coverageTransport	"TOTAL";    #   Toutes destinations confondues
+        ex:measuredMetric		"CAF_PAS";  #   Uniquement les vols commerciaux de passagers
+        rdf:value				?nbVolsPassagers
+  
+  SERVICE <http://127.0.0.1:3030/groupe3/query>{
+  	?y	dbp:country					?countryName;
+  		dbp:year					"2017"^^xsd:int; #  Tricky thing to make it work...
+  		dbp:humanDevelopmentIndex	?hdi.
+  }
+}
+GROUP BY ?countryName ?hdi
+ORDER BY DESC (?TotalVolsPassagers)
