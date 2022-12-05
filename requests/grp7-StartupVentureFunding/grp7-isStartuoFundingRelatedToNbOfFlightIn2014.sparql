@@ -1,0 +1,35 @@
+PREFIX schema: <http://schema.org/>
+PREFIX exA: <http://example.org/>
+PREFIX ex: <http://example.com/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+
+#
+#   REQUÊTE AVEC LE GROUPE 7    (Fichier companies_laison.ttl pris le 04.12.2022)
+#       Affiche le nom du pays, le total des valeurs de levées de fond du pays mais
+#       également le nombre de vols commerciaux (passagers, fret et courrier)
+#       effectués par les principaux aéroports de ce dernier en 2014
+#
+
+SELECT DISTINCT ?countryName ((xsd:integer(SUM(xsd:float(?amount)))) AS ?TotalAmount) (SUM(?nbVols) AS ?TotalNbVols)
+WHERE {
+	?airport	dbo:iso31661Code	?countryCode;
+    			dbo:country	?countryName.
+  
+	?measure	exA:declarativeAirport	?airport;
+  				dbo:year				2014;       #   On spécifie l'année
+     			exA:unit				"FLIGHT";   #   On veut le nombre de vols
+  	     		exA:airline				"TOTAL";    #   Toutes compagnies confondues
+         		exA:coverageTransport	"TOTAL";    #   Toutes destinations confondues
+          		exA:measuredMetric		"CAF";      #   Passagers, courrier et fret
+  				rdf:value				?nbVols.
+  
+    SERVICE <http://127.0.0.1:3030/groupe7/query>{
+		?y		dbo:iso31661Code	?countryCode;
+    			ex:year				"2014.0";   #   Pretty ugly but needed to make it work
+       			schema:amount		?amount.
+  }
+}
+GROUP BY ?countryName
+ORDER BY DESC (?TotalAmount)
