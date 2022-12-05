@@ -1,3 +1,0 @@
-To generate Turtle file of the data set:
-//  --dedup 100000 is only here to make file size smaller by removing triples duplication
-./tarql-1.2/bin/tarql --dedup 1000000  ./SPARQL/dataset_crea_annuel.sparql > Turtle/data.ttl  
