@@ -1,5 +1,8 @@
 # Projet DANA 2022 - Web des Données & Web sémantique
 
+> **:warning: ATTENTION:**\
+>  Certains fichiers sont trop volumineux pour GITHUB, les commits originaux ont donc été modifiés pour exclure tous les fichiers dépassant 100MB (limite imposé par GITHUB). Néanmoins, les fichiers de génération sparql restent valides et utilisables avec TARQL pour retrouver les fichiers générés (mais maintenant absents).
+
 ## Participants
 - Quentin GOMES DOS REIS
 - Alan PROVOST
