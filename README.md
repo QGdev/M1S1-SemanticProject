@@ -23,6 +23,9 @@ Il est sous la licence CC BY 4.0 et est disponible à l'adresse suivante [https:
 ## Sémantisation
 En l'état, le fichier CSV n'est pas traitable au vu de sa taille (1,3Go), nous allons donc traiter uniquement les données annuelles, on utilise donc SPARQL et pour trancrire notre dataset en Turtle, avec le fichier dataset_crea_annuel.sparql.
 
+![Exemple de notre schéma de données](dataset_diagram_exemple.png)
+
+<!---
 ```plantuml
    @startuml
         skinparam componentStyle rectangle
@@ -62,7 +65,7 @@ En l'état, le fichier CSV n'est pas traitable au vu de sa taille (1,3Go), nous 
         (http://example.org/airport/FR/LFPG) <-up- (http://example.org/measure/FR/LFPG/2011/CAF/INTL/LIC_EU) : "ex:declarativeAirport"
         (http://example.org/airport/FR/LFPG) <-up- (http://example.org/measure/FR/LFPG/2010/FRM_BRD/NAT/TOTAL) : "ex:declarativeAirport"
 @enduml
-```
+-->
 
 Une fois traité avec TARQL, on obtient un fichier Turtle contenant environ 11 536 926 triples, ci-dessus, voici un exemples de structure de données de notre fichier Turtle.
 
