@@ -79,8 +79,8 @@ Afin de permettre de la liaison avec le plus de groupes possibles, nous avons d�
 
 | Fichier     | Format des codes pays <br> *(dbo:iso31661Code)*| Contient les noms de pays <br> *(dbo:country)* | Pour commande pour "re-compiler " <br> au format Turtle depuis la racine du projet |
 | ----------- | ---------------------------------------------- | ---------------------------------------------- | ---------------------------------------------------------------------------------- |
-| [data_original.ttl](https://gitlab.univ-nantes.fr/E192263G/semantic-project/-/blob/main/dataset/data_original.ttl) <br> *(Original, sans modifications)* | ISO31661-ALPHA2 <br> *(Sauf la Grèce qui est nommé en EL au niveau Européen)*  | Non | ```./tarql-1.2/bin/tarql --dedup 10000000  ./build/dataset_creation_original.sparql > dataset/data_original.ttl``` |
-| [data_complete.ttl](https://gitlab.univ-nantes.fr/E192263G/semantic-project/-/blob/main/dataset/data_complete.ttl)  <br> *(Version finale, celle qui est retenue)* |  ISO31661-ALPHA2 *(La Grèce passe de EL à GL)* <br> ISO31661-ALPHA3 | Oui | ```./tarql-1.2/bin/tarql --dedup 10000000  ./build/dataset_creation_complete.sparql > dataset/data_complete.ttl``` |
+| data_original.ttl <br> *(Original, sans modifications)* | ISO31661-ALPHA2 <br> *(Sauf la Grèce qui est nommé en EL au niveau Européen)*  | Non | ```./tarql-1.2/bin/tarql --dedup 10000000  ./build/dataset_creation_original.sparql > dataset/data_original.ttl``` |
+| data_complete.ttl  <br> *(Version finale, celle qui est retenue)* |  ISO31661-ALPHA2 *(La Grèce passe de EL à GL)* <br> ISO31661-ALPHA3 | Oui | ```./tarql-1.2/bin/tarql --dedup 10000000  ./build/dataset_creation_complete.sparql > dataset/data_complete.ttl``` |
 
 Bien sûr, seuls les codes pays ont été modifiés, les codes ICAO et les différentes valeurs restent inchangées quelque soit la version.
 
@@ -90,9 +90,9 @@ Bien sûr, seuls les codes pays ont été modifiés, les codes ICAO et les diff�
 Nous avons effectué trois exemples de requêtes, les voici...
 | Fichier | Résumé  |
 | ------- | ------- | 
-| [local1-Top20FrenchAirportsReportingTheBiggestNumberOfFlightsIn2020.sparql](https://gitlab.univ-nantes.fr/E192263G/semantic-project/-/blob/main/requests/local/local1-Top20FrenchAirportsReportingTheBiggestNumberOfFlightsIn2020.sparql) | Liste des 20 aéroports français ayant déclaré le plus de vols en 2020. |
-| [local2-FrenchAirportsThatHaveTheBiggestFillingRateOnNationalFlights.sparql](https://gitlab.univ-nantes.fr/E192263G/semantic-project/-/blob/main/requests/local/local2-FrenchAirportsThatHaveTheBiggestFillingRateOnNationalFlights.sparql) | Les aéroports français dont les vols nationaux ont été les plus chargés en fonction des années |
-| [local3-AirportThatOfferedMoreThan100000SeatsIn2020.sparql](https://gitlab.univ-nantes.fr/E192263G/semantic-project/-/blob/main/requests/local/local3-AirportThatOfferedMoreThan100000SeatsIn2020.sparql) | Aéroports offrant un nombre de sièges passagers supérieurs à 100 000 en 2020. |
+| [local1-Top20FrenchAirportsReportingTheBiggestNumberOfFlightsIn2020.sparql](https://github.com/QGdev/M1S1-SemanticProject/blob/main/requests/local/local1-Top20FrenchAirportsReportingTheBiggestNumberOfFlightsIn2020.sparql) | Liste des 20 aéroports français ayant déclaré le plus de vols en 2020. |
+| [local2-FrenchAirportsThatHaveTheBiggestFillingRateOnNationalFlights.sparql](https://github.com/QGdev/M1S1-SemanticProject/blob/main/requests/local/local2-FrenchAirportsThatHaveTheBiggestFillingRateOnNationalFlights.sparql) | Les aéroports français dont les vols nationaux ont été les plus chargés en fonction des années |
+| [local3-AirportThatOfferedMoreThan100000SeatsIn2020.sparql](https://github.com/QGdev/M1S1-SemanticProject/blob/main/requests/local/local3-AirportThatOfferedMoreThan100000SeatsIn2020.sparql) | Aéroports offrant un nombre de sièges passagers supérieurs à 100 000 en 2020. |
 
 
 ## Requêtes locales
@@ -105,6 +105,6 @@ Nous avons effectué trois exemples de requêtes liées, les voici...
 
 | Fichier | Groupe de liaison | Résumé |
 | ------- | ----------------- | ------ | 
-| [grp3-IsHDIRelatedToNbPassengerFlightIn2017.sparql](https://gitlab.univ-nantes.fr/E192263G/semantic-project/-/blob/main/requests/linked/grp3-IsHDIRelatedToNbPassengerFlightIn2017.sparql) | 3 | Le nombre de vols de passagers est-il relatif à l’HDI d’un pays en 2017 ? |
-| [grp4-EmittedCo2AndNbOfFlightsIn2010.sparql](https://gitlab.univ-nantes.fr/E192263G/semantic-project/-/blob/main/requests/linked/grp4-EmittedCo2AndNbOfFlightsIn2010.sparql) | 4 |Affichage de la quantité de Co2 émise et du nombre de vols par pays en 2010 |
-| [grp7-isStartuoFundingRelatedToNbOfFlightIn2014.sparql](https://gitlab.univ-nantes.fr/E192263G/semantic-project/-/blob/main/requests/linked/grp7-isStartuoFundingRelatedToNbOfFlightIn2014.sparql) | 7 | Le nombre de vols est-il relatif au total des levées de fonds par pays en 2014 ? |
+| [grp3-IsHDIRelatedToNbPassengerFlightIn2017.sparql](https://github.com/QGdev/M1S1-SemanticProject/blob/main/requests/linked/grp3-IsHDIRelatedToNbPassengerFlightIn2017.sparql) | 3 | Le nombre de vols de passagers est-il relatif à l’HDI d’un pays en 2017 ? |
+| [grp4-EmittedCo2AndNbOfFlightsIn2010.sparql](https://github.com/QGdev/M1S1-SemanticProject/blob/main/requests/linked/grp4-EmittedCo2AndNbOfFlightsIn2010.sparql) | 4 |Affichage de la quantité de Co2 émise et du nombre de vols par pays en 2010 |
+| [grp7-isStartuoFundingRelatedToNbOfFlightIn2014.sparql](https://github.com/QGdev/M1S1-SemanticProject/blob/main/requests/linked/grp7-isStartuoFundingRelatedToNbOfFlightIn2014.sparql) | 7 | Le nombre de vols est-il relatif au total des levées de fonds par pays en 2014 ? |
